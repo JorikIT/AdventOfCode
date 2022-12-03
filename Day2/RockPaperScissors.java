@@ -10,7 +10,7 @@ public class RockPaperScissors {
     public static void main(String[] args) throws IOException {
 
         AtomicInteger score = new AtomicInteger();
-        Files.readAllLines(Paths.get("/Users/Jorik/Documents/IntelliJ/AdventOfCode/Day2/puzzleInput.txt")).forEach(input -> {
+        Files.readAllLines(Paths.get("Day2/puzzleInput.txt")).forEach(input -> {
             String[] s = input.split(" ");
             score.addAndGet(sumScore(s[0], s[1]));
         });
