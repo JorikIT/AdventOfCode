@@ -24,10 +24,25 @@ public class TuningTrouble {
             result.write(buffer, 0, length);
         }
         List<Character> characters = result.toString().chars().mapToObj(c -> (char) c).toList();
+        partOne(characters);
+        partTwo(characters);
+    }
+
+    private static void partOne(List<Character> characters) {
         for (int i = 3; i < characters.size(); i++) {
-            boolean unique = unique(Arrays.asList(characters.get(i), characters.get(i-1), characters.get(i-2), characters.get(i-3)));
+            boolean unique = unique(Arrays.asList(characters.get(i), characters.get(i - 1), characters.get(i - 2), characters.get(i - 3)));
             if (unique) {
-                System.out.println(i+1);
+                System.out.println(i + 1);
+                break;
+            }
+        }
+    }
+
+    private static void partTwo(List<Character> characters) {
+        for (int i = 13, j = 0; i < characters.size(); i++, j++) {
+            boolean unique = unique(characters.subList(j, i + 1));
+            if (unique) {
+                System.out.println(i + 1);
                 break;
             }
         }
