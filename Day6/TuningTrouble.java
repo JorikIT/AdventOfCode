@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.Arrays;
 import java.util.List;
 
 public class TuningTrouble {
@@ -24,22 +23,12 @@ public class TuningTrouble {
             result.write(buffer, 0, length);
         }
         List<Character> characters = result.toString().chars().mapToObj(c -> (char) c).toList();
-        partOne(characters);
-        partTwo(characters);
+        tune(characters, 3);
+        tune(characters, 13);
     }
 
-    private static void partOne(List<Character> characters) {
-        for (int i = 3; i < characters.size(); i++) {
-            boolean unique = unique(Arrays.asList(characters.get(i), characters.get(i - 1), characters.get(i - 2), characters.get(i - 3)));
-            if (unique) {
-                System.out.println(i + 1);
-                break;
-            }
-        }
-    }
-
-    private static void partTwo(List<Character> characters) {
-        for (int i = 13, j = 0; i < characters.size(); i++, j++) {
+    private static void tune(List<Character> characters, int marker) {
+        for (int i = marker, j = 0; i < characters.size(); i++, j++) {
             boolean unique = unique(characters.subList(j, i + 1));
             if (unique) {
                 System.out.println(i + 1);
