@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class NoSpaceLeft {
@@ -26,11 +27,21 @@ public class NoSpaceLeft {
         input.remove(0);
 
         createTree(input);
-        sumSubFolders(allFolders.get(0));
+//        sumSubFolders(allFolders.get(0));   uncomment for part one
 
         List<Folder> filteredList = allFolders.stream().filter(folder -> folder.getTotalSize() < 100_000).toList();
-        int sum = filteredList.stream().mapToInt(Folder::getTotalSize).sum();
-        System.out.println(sum);
+        int sumDirSizesUnderHundredK = filteredList.stream().mapToInt(Folder::getTotalSize).sum();
+        System.out.println("sum dir sizes under the 100K: " + sumDirSizesUnderHundredK);
+
+         // part two
+        int totalSpaceInUse = allFolders.stream().mapToInt(Folder::getTotalSize).sum();
+        int spaceLeft = 70_000_000 - totalSpaceInUse; // 70_000_000 = total disk size
+        int spaceToRemove = 30_000_000 - spaceLeft; // 30_000_000 size need for update
+
+        sumSubFolders(allFolders.get(0));
+        allFolders.sort(Comparator.comparing(Folder::getTotalSize));
+        int dirToRemoveSize = allFolders.stream().dropWhile(size -> size.getTotalSize() < spaceToRemove).toList().get(0).getTotalSize();
+        System.out.println("dir size to remove: " + dirToRemoveSize);
     }
 
     private static void sumSubFolders(Folder folder) {
