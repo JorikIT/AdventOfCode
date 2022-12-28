@@ -31,13 +31,13 @@ public class MonkeyInTheMiddle {
 
     private static void inspectItems() {
         for (Monkey monkey : monkeys) {
-            Iterator<Integer> iterator = monkey.getItems().iterator();
+            Iterator<Integer> iterator = monkey.items.iterator();
             while (iterator.hasNext()) {
                 Integer item = iterator.next();
-                int itemWorryLvl = calculateWorryLevel(item, monkey.getOperation());
+                int itemWorryLvl = calculateWorryLevel(item, monkey.operation);
                 int itemWorryLvlAfterInspection = itemWorryLvl / 3;
-                int monkeyToReceive = itemWorryLvlAfterInspection % monkey.getTestNumber() == 0 ? monkey.getMonkeys()[0] : monkey.getMonkeys()[1];
-                monkeys.get(monkeyToReceive).getItems().add(itemWorryLvlAfterInspection);
+                int monkeyToReceive = itemWorryLvlAfterInspection % monkey.testNumber == 0 ? monkey.monkeys[0] : monkey.monkeys[1];
+                monkeys.get(monkeyToReceive).items.add(itemWorryLvlAfterInspection);
                 iterator.remove();
                 monkey.inspectedItems++;
             }
@@ -84,22 +84,6 @@ public class MonkeyInTheMiddle {
             this.operation = operation;
             this.testNumber = testNumber;
             this.monkeys = monkeys;
-        }
-
-        public List<Integer> getItems() {
-            return items;
-        }
-
-        public Integer getTestNumber() {
-            return testNumber;
-        }
-
-        public int[] getMonkeys() {
-            return monkeys;
-        }
-
-        public String getOperation() {
-            return operation;
         }
 
         public int getInspectedItems() {
