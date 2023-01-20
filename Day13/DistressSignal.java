@@ -48,22 +48,19 @@ public class DistressSignal {
         boolean correctOrder = true;
         boolean evenLists = false;
 
-//        List<Object> itemsLeft = parseItems(left);
-//        List<Object> itemsRight = parseItems(right);
-
-//        long countLeft = left.chars().filter(Character::isDigit).count();
-//        long countRight = right.chars().filter(Character::isDigit).count();
-//        if (countLeft == 0 && countRight == 0) {
-//            long bracketsLeft = left.chars().filter(ch -> ch == '[').count();
-//            long bracketsRight = right.chars().filter(ch -> ch == '[').count();
-//            if (bracketsLeft < bracketsRight) {
-//                return true;
-//            } else if (bracketsLeft > bracketsRight) {
-//                return false;
-//            } else {
-//                evenLists = true;
-//            }
-//        }
+        long countLeft = left.chars().filter(Character::isDigit).count();
+        long countRight = right.chars().filter(Character::isDigit).count();
+        if (countLeft == 0 && countRight == 0) {
+            long bracketsLeft = left.chars().filter(ch -> ch == '[').count();
+            long bracketsRight = right.chars().filter(ch -> ch == '[').count();
+            if (bracketsLeft < bracketsRight) {
+                return true;
+            } else if (bracketsLeft > bracketsRight) {
+                return false;
+            } else {
+                evenLists = true;
+            }
+        }
         List<Object> objectsLeft = parseInput(left);
         List<Object> objectsRight = parseInput(right);
 
@@ -120,39 +117,6 @@ public class DistressSignal {
         }
 
         return correctOrder;
-    }
-
-    private static List<Object> parseItems(String line, int index) {
-
-        List<Object> objects = new ArrayList<>();
-        char c = line.charAt(index);
-        while (c != ']')
-        {
-            if (c == ',') {
-                index++;
-            }
-            else if (c == '[') {
-                objects.add(parseItems(line, index));
-            }
-            else {
-                objects.add(parse(line, index));
-            }
-            c = line.charAt(index);
-        }
-        index++;
-
-        return objects;
-    }
-
-    public static Integer parse(String line, int index)
-    {
-        int comma = line.indexOf(",", index);
-        comma = comma == -1 ? line.length() : comma;
-        int closingBracket = line.indexOf("]", index);
-        closingBracket = closingBracket == -1 ? line.length() : closingBracket;
-        String numStr = line.substring(index, Math.min(comma, closingBracket));
-        index += numStr.length();
-        return Integer.parseInt(numStr);
     }
 
     private static List<Object> parseInput(String input) {
